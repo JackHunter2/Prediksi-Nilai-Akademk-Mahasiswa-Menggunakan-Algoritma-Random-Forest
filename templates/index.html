@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Prediksi Nilai Akademik Mahasiswa - Random Forest</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="background-animation"></div>
+    <div class="container">
+        <div class="header">
+            <div class="header-icon">🎓</div>
+            <h1>Prediksi Nilai Akademik Mahasiswa</h1>
+            <p class="subtitle">Menggunakan Algoritma Random Forest</p>
+        </div>
+
+        <form id="predictionForm" class="prediction-form">
+            <div class="form-grid">
+                <div class="form-group">
+                    <label for="Student_Age">
+                        <span class="label-icon">👤</span>
+                        Usia Mahasiswa
+                    </label>
+                    <input type="number" id="Student_Age" name="Student_Age" min="17" max="30" required>
+                    <small class="helper-text">Masukkan usia antara 17-30 tahun</small>
+                </div>
+
+                <div class="form-group">
+                    <label for="Sex">
+                        <span class="label-icon">⚥</span>
+                        Jenis Kelamin
+                    </label>
+                    <select id="Sex" name="Sex" required>
+                        <option value="">-- Pilih --</option>
+                        <option value="Male">Laki-laki</option>
+                        <option value="Female">Perempuan</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="High_School_Type">
+                        <span class="label-icon">🏫</span>
+                        Jenis Sekolah Asal
+                    </label>
+                    <select id="High_School_Type" name="High_School_Type" required>
+                        <option value="">-- Pilih --</option>
+                        <option value="Private">Swasta</option>
+                        <option value="Other">Negeri</option>
+                        <option value="State">Lainnya</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="Scholarship">
+                        <span class="label-icon">💰</span>
+                        Beasiswa
+                    </label>
+                    <select id="Scholarship" name="Scholarship" required>
+                        <option value="">-- Pilih --</option>
+                        <option value="75%">25%</option>
+                        <option value="100%">50%</option>
+                        <option value="25%">75%</option>
+                        <option value="50%">100%</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="Additional_Work">
+                        <span class="label-icon">💼</span>
+                        Kerja Tambahan
+                    </label>
+                    <select id="Additional_Work" name="Additional_Work" required>
+                        <option value="">-- Pilih --</option>
+                        <option value="Yes">Tidak</option>
+                        <option value="No">Ya</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="Sports_activity">
+                        <span class="label-icon">⚽</span>
+                        Aktivitas Olahraga
+                    </label>
+                    <select id="Sports_activity" name="Sports_activity" required>
+                        <option value="">-- Pilih --</option>
+                        <option value="Yes">Tidak</option>
+                        <option value="No">Ya</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="Transportation">
+                        <span class="label-icon">🚌</span>
+                        Transportasi
+                    </label>
+                    <select id="Transportation" name="Transportation" required>
+                        <option value="">-- Pilih --</option>
+                        <option value="Bus">Bus</option>
+                        <option value="Private">Pribadi</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="Weekly_Study_Hours">
+                        <span class="label-icon">📚</span>
+                        Jam Belajar per Minggu
+                    </label>
+                    <input type="number" id="Weekly_Study_Hours" name="Weekly_Study_Hours" min="0" max="168" required>
+                    <small class="helper-text">Masukkan jumlah jam (0-168)</small>
+                </div>
+
+                <div class="form-group">
+                    <label for="Attendance">
+                        <span class="label-icon">✅</span>
+                        Kehadiran
+                    </label>
+                    <select id="Attendance" name="Attendance" required>
+                        <option value="">-- Pilih --</option>
+                        <option value="Always">Selalu</option>
+                        <option value="Never">Kadang-kadang</option>
+                        <option value="Sometimes">Tidak pernah</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="Reading">
+                        <span class="label-icon">📖</span>
+                        Suka Membaca
+                    </label>
+                    <select id="Reading" name="Reading" required>
+                        <option value="">-- Pilih --</option>
+                        <option value="Yes">Tidak</option>
+                        <option value="No">Ya</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="Notes">
+                        <span class="label-icon">✍️</span>
+                        Membuat Catatan
+                    </label>
+                    <select id="Notes" name="Notes" required>
+                        <option value="">-- Pilih --</option>
+                        <option value="Yes">Tidak</option>
+                        <option value="No">Ya</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="Listening_in_Class">
+                        <span class="label-icon">👂</span>
+                        Mendengarkan di Kelas
+                    </label>
+                    <select id="Listening_in_Class" name="Listening_in_Class" required>
+                        <option value="">-- Pilih --</option>
+                        <option value="Yes">Tidak</option>
+                        <option value="No">Ya</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="Project_work">
+                        <span class="label-icon">🔨</span>
+                        Mengerjakan Proyek
+                    </label>
+                    <select id="Project_work" name="Project_work" required>
+                        <option value="">-- Pilih --</option>
+                        <option value="Yes">Tidak</option>
+                        <option value="No">Ya</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="form-actions">
+                <button type="submit" id="submitBtn" class="btn-submit">
+                    <span class="btn-text">🔮 Prediksi Nilai Akademik</span>
+                    <span class="btn-loading" style="display: none;">
+                        <span class="spinner"></span>
+                        Memproses...
+                    </span>
+                </button>
+                <button type="reset" class="btn-reset" id="resetBtn">🔄 Reset Form</button>
+            </div>
+        </form>
+
+        <div id="resultContainer" class="result-container" style="display: none;">
+            <div class="result-card">
+                <div class="result-icon" id="resultIcon"></div>
+                <h2 class="result-title" id="resultTitle"></h2>
+                <div class="result-grade" id="resultGrade"></div>
+                <div class="result-confidence">
+                    <div class="confidence-label">Tingkat Keyakinan</div>
+                    <div class="confidence-bar">
+                        <div class="confidence-fill" id="confidenceFill"></div>
+                    </div>
+                    <div class="confidence-value" id="confidenceValue"></div>
+                </div>
+            </div>
+        </div>
+
+        <div id="errorContainer" class="error-container" style="display: none;">
+            <div class="error-message" id="errorMessage"></div>
+        </div>
+    </div>
+
+    <script src="{{ url_for('static', filename='script.js') }}"></script>
+</body>
+</html>
